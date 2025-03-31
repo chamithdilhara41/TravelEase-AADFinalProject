@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Registration - TravelEase</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Topbar Start -->
+<div class="container-fluid bg-light pt-3 d-none d-lg-block">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
+                <div class="d-inline-flex align-items-center">
+                    <p><i class="fa fa-envelope mr-2"></i>info@travelEase.com</p>
+                    <p class="text-body px-3">|</p>
+                    <p><i class="fa fa-phone-alt mr-2"></i>+94 345 6789</p>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-primary px-3" href="">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="text-primary px-3" href="">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="text-primary px-3" href="">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="text-primary px-3" href="">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="text-primary pl-3" href="">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Topbar End -->
+
+
+<!-- Navbar Start -->
+<div class="container-fluid position-relative nav-bar p-0">
+    <div class="container-lg position-relative p-0 px-lg-3" style="z-index: 9;">
+        <nav class="navbar navbar-expand-lg bg-light navbar-light shadow-lg py-3 py-lg-0 pl-3 pl-lg-5">
+            <a href="index.html" class="navbar-brand">
+                <h1 class="m-0 text-primary"><span class="text-dark">Travel</span>Ease</h1>
+            </a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
+                <div class="navbar-nav ml-auto py-0">
+                    <a href="about.html" class="nav-item nav-link">About</a>
+                    <a href="service.html" class="nav-item nav-link">Services</a>
+                    <a href="package.html" class="nav-item nav-link">Packages</a>
+                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                    <a href="loginRegister.html" class="nav-item nav-link">Sign in/up</a>
+
+                    <div class="nav-item dropdown d-none" id="userDropdown" >
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><span>Hi,user name</span></a>
+                        <div class="dropdown-menu border-0 rounded-0 m-0 ">
+                            <a href="#" class="dropdown-item" onclick="loadPage('user-profile.html')">User Profile</a>
+                            <a href="#" class="dropdown-item" onclick="loadPage('bookings.html')">Bookings</a>
+                            <a href="#" class="dropdown-item text-danger">Log out</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+<!-- Navbar End -->
+
+<!-- Header Start -->
+<div class="container-fluid page-header">
+    <div class="container">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 400px">
+            <h3 class="display-4 text-white text-uppercase">Vehicle Register</h3>
+            <div class="d-inline-flex text-white">
+                <p class="m-0 text-uppercase"><a class="text-white" href="">Home</a></p>
+                <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                <p class="m-0 text-uppercase">User profile</p>
+                <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                <p class="m-0 text-uppercase">Register vehicle</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Header End -->
+
+<div class="container mt-5"><br>
+    <h2 class="mb-4">Vehicle Registration</h2>
+    <form action="/registerVehicle" method="post" enctype="multipart/form-data">
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <td><label for="vehicleNumber" class="form-label">Vehicle Number</label></td>
+                <td><input type="text" class="form-control" id="vehicleNumber" name="vehicleNumber" required></td>
+            </tr>
+            <tr>
+                <td><label for="vehicleType" class="form-label">Vehicle Type</label></td>
+                <td>
+                    <select class="form-select" id="vehicleType" name="vehicleType" required>
+                        <option value="Car">Car</option>
+                        <option value="Van">Van</option>
+                        <option value="Bus">Bus</option>
+                        <option value="SUV">SUV</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="brand" class="form-label">Vehicle Brand</label></td>
+                <td><input type="text" class="form-control" id="brand" name="brand" required></td>
+            </tr>
+            <tr>
+                <td><label for="model" class="form-label">Vehicle Model</label></td>
+                <td><input type="text" class="form-control" id="model" name="model" required></td>
+            </tr>
+            <tr>
+                <td><label for="year" class="form-label">Manufacturing Year</label></td>
+                <td><input type="number" class="form-control" id="year" name="year" min="1900" max="2025" step="1" required></td>
+            </tr>
+            <tr>
+                <td><label for="color" class="form-label">Vehicle Color</label></td>
+                <td><input type="text" class="form-control" id="color" name="color" required></td>
+            </tr>
+            <tr>
+                <td><label for="seatingCapacity" class="form-label">Seating Capacity</label></td>
+                <td><input type="number" class="form-control" id="seatingCapacity" name="seatingCapacity" required></td>
+            </tr>
+            <tr>
+                <td><label for="fuelType" class="form-label">Fuel Type</label></td>
+                <td>
+                    <select class="form-select" id="fuelType" name="fuelType" required>
+                        <option value="Petrol">Petrol</option>
+                        <option value="Diesel">Diesel</option>
+                        <option value="Electric">Electric</option>
+                        <option value="Hybrid">Hybrid</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="insuranceDocument" class="form-label">Vehicle Insurance Document</label></td>
+                <td>
+                    <input type="file" class="form-control" id="insuranceDocument" name="insuranceDocument" accept=".pdf,.jpg,.png" required>
+                    <div id="insurancePreview" class="mt-2"></div>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="registrationDocument" class="form-label">Vehicle Registration Document</label></td>
+                <td>
+                    <input type="file" class="form-control" id="registrationDocument" name="registrationDocument" accept=".pdf,.jpg,.png" required>
+                    <div id="registrationPreview" class="mt-2"></div>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="vehicleImages" class="form-label">Vehicle Interior & Exterior Photos (Max: 5)</label></td>
+                <td>
+                    <input type="file" class="form-control" id="vehicleImages" name="vehicleImages" accept=".jpg,.png" multiple required>
+                    <div id="previewContainer" class="mt-2 d-flex flex-wrap"></div>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="userEmail" class="form-label">User Email</label></td>
+                <td><input type="text" class="form-control" id="userEmail" name="userEmail" required></td>
+            </tr>
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary">Register Vehicle</button>
+    </form><br>
+</div>
+
+<script>
+    $(document).ready(function() {
+        // On form submit
+        $('form').on('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Create FormData object from the form
+            var formData = new FormData(this);
+
+            // Send AJAX request
+            $.ajax({
+                url: 'http://localhost:8080/api/v1/vehicle/register',  // Your backend endpoint for vehicle registration
+                type: 'POST',
+                data: formData,
+                contentType: false,  // Let jQuery set content type as multipart/form-data
+                processData: false,  // Do not process the data before sending
+                success: function(response) {
+                    // Handle success using the numeric code instead of a string
+                    if (response.code === 201) {  // Assuming 201 is for Created
+                        alert('Vehicle Registered Successfully!');
+                        let userEmail = getFromLocalStorage("email");
+
+                        if (userEmail) {
+                            // Send request to update user role
+                            updateUserRole(userEmail);
+                        }
+
+                        $('form')[0].reset();  // Reset the form
+                    }if (response.code === 406) {  // 406 for Not Acceptable
+                        alert('Vehicle Number Already Exists!');
+                    } else {
+                        alert('Unexpected Response: ' + response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Handle error
+                    alert('An error occurred while registering the vehicle.');
+                    console.log(xhr.responseText);  // Log the full error response
+                }
+            });
+
+        });
+
+        function updateUserRole(email) {
+            $.ajax({
+                url: 'http://localhost:8080/api/v1/user/update-role?email=' + encodeURIComponent(email) + '&role=VEHICLE',
+                type: 'POST',
+                success: function(response) {
+                    alert('User role updated to VEHICLE successfully!');
+                },
+                error: function(xhr, status, error) {
+                    alert('Failed to update user role.');
+                    console.log(xhr.responseText);
+                }
+            });
+        }
+
+
+        document.getElementById("userEmail").value = getFromLocalStorage("email"); // i want to set email
+
+        function getFromLocalStorage(key) {
+            const data = localStorage.getItem(key);
+            if (!data) return null;
+
+            const parsedData = JSON.parse(data);
+            const now = new Date().getTime();
+
+            if (now > parsedData.expiry) {
+                localStorage.removeItem(key);
+                return null;
+            }
+            return parsedData.value;
+
+        }
+    });
+</script>
+
+<script>
+    function previewFile(input, previewContainer) {
+        const preview = $('#' + previewContainer);
+        preview.empty();
+        const file = input.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const element = file.type.includes("pdf") ? $('<embed>') : $('<img>');
+                element.attr('src', e.target.result)
+                    .addClass('m-2')
+                    .css({
+                        'width': '100px',
+                        'height': '100px',
+                        'object-fit': 'cover'
+                    });
+                preview.append(element);
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    $('#insurance').on('change', function () {
+        previewFile(this, 'insurancePreview');
+    });
+
+    $('#registration').on('change', function () {
+        previewFile(this, 'registrationPreview');
+    });
+
+    $('#vehicleImages').on('change', function(event) {
+        const previewContainer = $('#previewContainer');
+        previewContainer.empty();
+        const files = event.target.files;
+
+        if (files.length > 5) {
+            alert('You can upload a maximum of 5 photos.');
+            $(this).val('');
+            return;
+        }
+
+        $.each(files, function(index, file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = $('<img>');
+                img.attr('src', e.target.result)
+                    .addClass('m-2')
+                    .css({
+                        'width': '100px',
+                        'height': '100px',
+                        'object-fit': 'cover'
+                    });
+                previewContainer.append(img);
+            };
+            reader.readAsDataURL(file);
+        });
+    });
+
+</script>
+
+<script src="js/user-cofig.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Contact Javascript File -->
+<script src="mail/jqBootstrapValidation.min.js"></script>
+<script src="mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="js/main.js"></script>
+
+</body>
+</html>

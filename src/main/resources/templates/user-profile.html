@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Travelease</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+<!-- Topbar Start -->
+<div class="container-fluid bg-light pt-3 d-none d-lg-block">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
+                <div class="d-inline-flex align-items-center">
+                    <p><i class="fa fa-envelope mr-2"></i>info@travelEase.com</p>
+                    <p class="text-body px-3">|</p>
+                    <p><i class="fa fa-phone-alt mr-2"></i>+94 345 6789</p>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-primary px-3" href="">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="text-primary px-3" href="">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="text-primary px-3" href="">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="text-primary px-3" href="">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="text-primary pl-3" href="">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Topbar End -->
+
+
+<!-- Navbar Start -->
+<div class="container-fluid position-relative nav-bar p-0">
+    <div class="container-lg position-relative p-0 px-lg-3" style="z-index: 9;">
+        <nav class="navbar navbar-expand-lg bg-light navbar-light shadow-lg py-3 py-lg-0 pl-3 pl-lg-5">
+            <a href="index.html" class="navbar-brand">
+                <h1 class="m-0 text-primary"><span class="text-dark">Travel</span>Ease</h1>
+            </a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
+                <div class="navbar-nav ml-auto py-0">
+                    <a href="about.html" class="nav-item nav-link">About</a>
+                    <a href="service.html" class="nav-item nav-link">Services</a>
+                    <a href="package.html" class="nav-item nav-link">Packages</a>
+                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                    <a href="loginRegister.html" class="nav-item nav-link">Sign in/up</a>
+
+                    <div class="nav-item dropdown d-none" id="userDropdown" >
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><span>Hi,user name</span></a>
+                        <div class="dropdown-menu border-0 rounded-0 m-0 ">
+                            <a href="#" class="dropdown-item" onclick="loadPage('user-profile.html')">User Profile</a>
+                            <a href="#" class="dropdown-item" onclick="loadPage('bookings.html')">Bookings</a>
+                            <a href="#" class="dropdown-item text-danger">Log out</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+<!-- Navbar End -->
+
+<!-- Header Start -->
+<div class="container-fluid page-header">
+    <div class="container">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 400px">
+            <h3 class="display-4 text-white text-uppercase">User Profile</h3>
+            <div class="d-inline-flex text-white">
+                <p class="m-0 text-uppercase"><a class="text-white" href="">Home</a></p>
+                <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                <p class="m-0 text-uppercase">User Profile</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Header End -->
+
+
+<!-- user details -->
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h2 class="text-center">User Profile</h2>
+        </div>
+        <div class="card-body">
+            <p><strong>Name:</strong> <span id="userName"></span></p>
+            <p><strong>Email:</strong> <span id="userEmail"></span></p>
+            <p><strong>Contact:</strong> <span id="userPhone"></span></p>
+
+            <button id="editButton" class="btn btn-warning">Edit Profile</button>
+            <button id="deleteButton" class="btn btn-danger">Delete Account</button>
+        </div>
+    </div>
+
+    <div id="registerWarning" class="card border-danger text-danger bg-light d-none mt-3">
+        <div class="card-body">
+            <h5 class="card-title text-danger">Do you want to register for TravelEase?</h5>
+            <p>You haven't registered a vehicle yet. want to register?</p>
+            <button class="btn btn-danger" onclick="loadPage('vehicle-register.html')">Register Vehicle</button>
+        </div>
+    </div>
+
+    <!-- Vehicle details section (hidden by default) -->
+    <div id="vehicleDetails" class="card border-success d-none mt-3">
+        <div class="card-body">
+            <h5 class="card-title text-success">Vehicle Details</h5>
+            <!--<p><strong>Vehicle Type:</strong> Car</p>
+            <p><strong>License Plate:</strong> ABC-1234</p>-->
+            <button class="btn btn-success" onclick="loadPage('vehicle-register.html')">View Vehicle details</button>
+        </div>
+    </div>
+    <!-- Edit User Modal -->
+    <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editUserModalLabel">Edit Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm">
+                        <div class="mb-3">
+                            <label for="editName" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="editName">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="editEmail">
+                        </div>
+                        <button type="submit" class="btn btn-success">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Vehicle Section -->
+</div>
+<!-- Modal for No User Logged In -->
+<div class="modal fade" id="noUserModal" tabindex="-1" aria-labelledby="noUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="noUserModalLabel">Error</h5>
+            </div>
+            <div class="modal-body">
+                <p>No user is logged in.</p>
+                <p> Redirecting to login page...</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="redirectLogin">Go to Login</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const email = getFromLocalStorage("email"); // Get user ID from local storage
+
+        if (!email) {
+            // Show the modal
+            const noUserModal = new bootstrap.Modal(document.getElementById("noUserModal"));
+            noUserModal.show();
+
+            // Redirect to login when the button is clicked
+            document.getElementById("redirectLogin").addEventListener("click", () => {
+                window.location.href = "loginRegister.html"; // Redirect to login page
+            });
+        }
+
+
+
+        $(document).ready(function () {
+            const email = getFromLocalStorage("email"); // Assuming you store user email in localStorage
+            const name = getFromLocalStorage("name"); // Assuming you store userId in localStorage
+
+            // Fetch user details and display them
+            $.get(`http://localhost:8080/api/v1/user/getUserByEmail?email=${encodeURIComponent(email)}`, function (response) {
+                $('#userName').text(response.data.name);
+                $('#userEmail').text(response.data.email);
+                $('#userPhone').text(response.data.contact);
+
+                let userRole = response.data.role;
+
+                if (userRole === "VEHICLE") {
+                    document.getElementById("vehicleDetails").classList.remove("d-none");
+                } else {
+                    document.getElementById("registerWarning").classList.remove("d-none");
+                }
+
+            }).fail(function (error) {
+                console.error("Error fetching user data:", error);
+            });
+
+            // Open the edit modal and load user details
+            $('#editButton').click(function () {
+                $.get(`http://localhost:8080/api/v1/user/getUserByEmail?email=${encodeURIComponent(email)}`, function (response) {
+
+                    $('#editName').val(response.data.name);
+                    $('#editEmail').val(response.data.email);
+
+                    let editModal = new bootstrap.Modal($('#editUserModal')[0]);
+                    editModal.show();
+                }).fail(function (error) {
+                    console.error("Error loading user details:", error);
+                });
+            });
+
+            // Handle form submission for updating user details
+            $('#editForm').submit(function (e) {
+                e.preventDefault();
+                const updatedUser = {
+                    name: $('#editName').val(),
+                    email: $('#editEmail').val()
+                };
+
+                $.ajax({
+                    url: `http://localhost:8080/api/users/${userId}`,
+                    method: 'PUT',
+                    contentType: 'application/json',
+                    data: JSON.stringify(updatedUser),
+                    success: function () {
+                        alert("Profile updated successfully!");
+                        location.reload(); // Refresh to show updated data
+                    },
+                    error: function (error) {
+                        console.error("Error updating profile:", error);
+                    }
+                });
+            });
+
+            // Handle account deletion
+            $('#deleteButton').click(function () {
+                if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+                    $.ajax({
+                        url: `http://localhost:8080/api/users/${userId}`,
+                        method: 'DELETE',
+                        success: function () {
+                            alert("Account deleted successfully!");
+                            localStorage.clear(); // Clear storage
+                            window.location.href = "login.html"; // Redirect to login
+                        },
+                        error: function (error) {
+                            console.error("Error deleting account:", error);
+                        }
+                    });
+                }
+            });
+        });
+
+    });
+
+
+
+    // Get Data from Local Storage with Expiration Check
+    function getFromLocalStorage(key) {
+        const data = localStorage.getItem(key);
+        if (!data) return null;
+
+        const parsedData = JSON.parse(data);
+        const now = new Date().getTime();
+
+        if (now > parsedData.expiry) {
+            localStorage.removeItem(key);
+            return null;
+        }
+        return parsedData.value;
+    }
+</script>
+
+
+<!-- Footer Start -->
+<div class="container-fluid bg-dark text-white-50 py-5 px-sm-3 px-lg-5" style="margin-top: 90px;">
+    <div class="row pt-5">
+        <div class="col-lg-3 col-md-6 mb-5">
+            <a href="" class="navbar-brand">
+                <h1 class="text-primary"><span class="text-white">Travel</span>Ease</h1>
+            </a>
+            <p>Sed ipsum clita tempor ipsum ipsum amet sit ipsum lorem amet labore rebum lorem ipsum dolor. No sed vero lorem dolor dolor</p>
+            <h6 class="text-white text-uppercase mt-4 mb-3" style="letter-spacing: 5px;">Follow Us</h6>
+            <div class="d-flex justify-content-start">
+                <a class="btn btn-outline-primary btn-square mr-2" href="#"><i class="fab fa-twitter"></i></a>
+                <a class="btn btn-outline-primary btn-square mr-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                <a class="btn btn-outline-primary btn-square mr-2" href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a class="btn btn-outline-primary btn-square" href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-5">
+            <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Our Services</h5>
+            <div class="d-flex flex-column justify-content-start">
+                <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>About</a>
+                <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Destination</a>
+                <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Services</a>
+                <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Packages</a>
+                <a class="text-white-50" href="#"><i class="fa fa-angle-right mr-2"></i>Blog</a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-5">
+            <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Quick Links</h5>
+            <div class="d-flex flex-column justify-content-start">
+                <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Guides</a>
+                <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Testimonial</a>
+                <a class="text-white-50" href="#"><i class="fa fa-angle-right mr-2"></i>Blog</a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-5">
+            <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Contact Us</h5>
+            <p><i class="fa fa-map-marker-alt mr-2"></i>123 Street, Colombo, Sri Lanka</p>
+            <p><i class="fa fa-phone-alt mr-2"></i>+94 345 67890</p>
+            <p><i class="fa fa-envelope mr-2"></i>info@travelEase.com</p>
+        </div>
+    </div>
+</div>
+<div class="container-fluid bg-dark text-white border-top py-4 px-sm-3 px-md-5" style="border-color: rgba(256, 256, 256, .1) !important;">
+    <div class="row">
+        <div class="col-lg-6 text-center text-md-left mb-3 mb-md-0">
+            <p class="m-0 text-white-50">Copyright &copy; <a href="#">Domain</a>. All Rights Reserved.</a>
+            </p>
+        </div>
+    </div>
+</div>
+<!-- Footer End -->
+
+
+<!-- Back to Top -->
+<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+<script src="js/user-cofig.js"></script>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="lib/tempusdominus/js/moment.min.js"></script>
+<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<!-- Contact Javascript File -->
+<script src="mail/jqBootstrapValidation.min.js"></script>
+<script src="mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="js/main.js"></script>
+</body>
+
+</html>
