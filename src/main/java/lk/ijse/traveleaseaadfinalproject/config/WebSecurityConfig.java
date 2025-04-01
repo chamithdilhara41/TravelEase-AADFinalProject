@@ -56,6 +56,7 @@ public class WebSecurityConfig {
                                 "/api/v1/admin/**",
                                 "/api/v1/user/register",
                                 "/api/v1/user/**",
+                                "/api/v1/guide/**",
                                 "/api/v1/vehicle/**",
                                 "/api/v1/auth/refreshToken",
                                 "/v3/api-docs/**",

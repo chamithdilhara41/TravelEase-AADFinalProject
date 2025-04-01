@@ -1,14 +1,12 @@
 package lk.ijse.traveleaseaadfinalproject.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Data
 @Table(name = "vehicles")
 public class Vehicle {
 
