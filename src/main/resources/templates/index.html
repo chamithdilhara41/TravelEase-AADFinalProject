@@ -448,7 +448,7 @@
                 <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Guides</h6>
                 <h1>Our Travel Guides</h1>
             </div>
-            <div class="row">
+            <div class="row" id="guidesContainer">
                 <div class="col-lg-3 col-md-4 col-sm-6 pb-2">
                     <div class="team-item bg-white mb-4">
                         <div class="team-img position-relative overflow-hidden">
@@ -521,7 +521,50 @@
         </div>
     </div>
     <!-- Team End -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: "http://localhost:8080/api/v1/guide/getAll", // ✅ API endpoint
+            type: "GET",
+            dataType: "json",
+            success: function (response) {
+                if (response.code === 201 && response.data.length > 0) {
+                    let guideHTML = "";
 
+                    response.data.forEach(guide => {
+                        guideHTML += `
+                        <div class="col-lg-3 col-md-4 col-sm-6 pb-2">
+                            <div class="team-item bg-white mb-4">
+                                <div class="team-img position-relative overflow-hidden">
+                                    <img class="img-fluid w-100" src="uploads/${guide.imageUrl}" alt="Guide Image">
+                                    <div class="team-social">
+                                        <a class="btn btn-outline-primary btn-square" href="${guide.linkedin}" target="_blank">
+                                            <i class="fab fa-linkedin-in"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="text-center py-4">
+                                    <h5 class="text-truncate">${guide.fullName}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    });
+
+                    $("#guidesContainer").html(guideHTML);
+                } else {
+                    $("#guidesContainer").html("<p class='text-center'>No guides available.</p>");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("AJAX Error: ", error);
+                $("#guidesContainer").html("<p class='text-center text-danger'>Error loading guides.</p>");
+            }
+        });
+    });
+
+</script>
 
     <!-- Testimonial Start -->
     <div class="container-fluid py-5">

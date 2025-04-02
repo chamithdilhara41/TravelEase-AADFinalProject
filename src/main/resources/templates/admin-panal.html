@@ -58,7 +58,8 @@
     <a onclick="showPanel('dashboard')"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
     <a onclick="showPanel('users')"><i class="fas fa-users"></i> Users</a>
     <a onclick="showPanel('vehicles')"><i class="fas fa-car"></i> Vehicles</a>
-    <a onclick="showPanel('Destinations')"><i class="fas fa-route"></i> Destinations</a>
+    <a onclick="showPanel('destinations')"><i class="fas fa-route"></i> Destinations</a>
+    <a onclick="showPanel('guides')"><i class="fas fa-route"></i> Guides</a>
     <a onclick="showPanel('bookings')"><i class="fas fa-book"></i> Bookings</a>
     <a onclick="showPanel('packages')"><i class="fas fa-box"></i> Packages</a>
     <a onclick="showPanel('payments')"><i class="fas fa-credit-card"></i> Payments</a>
@@ -76,7 +77,7 @@
     <div id="vehicles" class="hidden">
         <h1>Vehicle Management</h1>
         <table class="table table-bordered mt-3">
-            <thead>
+            <thead class="table-dark">
             <tr>
                 <th>Vehicle No.</th>
                 <th>Type</th>
@@ -101,7 +102,7 @@
         <h1>User Management</h1>
         <!--<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</button>-->
         <table class="table table-bordered mt-3">
-            <thead>
+            <thead class="table-dark">
             <tr>
                 <th>Name</th>
                 <th>Email</th>
@@ -117,7 +118,7 @@
         <h1>Booking Management</h1>
         <!--<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</button>-->
         <table class="table table-bordered mt-3">
-            <thead>
+            <thead class="table-dark">
             <tr>
                 <th>Name</th>
                 <th>Email</th>
@@ -127,6 +128,125 @@
             </thead>
             <tbody id="bookingTableBody"></tbody>
         </table>
+    </div>
+
+    <div id="guides" class="hidden">
+        <h1>Guide Management</h1>
+
+        <!-- Search & Add Guide Section -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <!-- Add Guide Button (Left) -->
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addGuideModal">
+                Add Guide
+            </button>
+
+            <!-- Search Box (Right) -->
+            <input type="text" id="searchGuide" class="form-control w-25" placeholder="Search Guides by Name or Email">
+        </div>
+
+        <!-- Guide Table -->
+        <table class="table table-bordered mt-3">
+            <thead class="table-dark">
+            <tr>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Image</th>
+                <th>Description</th>
+                <th>Payment per Day</th>
+                <th>Linkedin</th>
+                <th>Booked</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody id="guideTableBody">
+            <!-- Guides will be loaded here -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Add Guide Modal -->
+    <div class="modal fade" id="addGuideModal" tabindex="-1" aria-labelledby="addGuideModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addGuideModalLabel">Add Guide</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addGuideForm" method="POST" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="guideName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" id="guideEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" id="guideDescription" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Payment per Day</label>
+                            <input type="number" class="form-control" id="guidePayment" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">LinkedIn URL</label>
+                            <input type="url" class="form-control" id="guideLinkedIn">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Upload Image</label>
+                            <input type="file" class="form-control" id="guideImage" accept="image/*" required>
+                            <img id="imagePreview" class="mt-2" style="width: 80px; height: 80px; display: none; border-radius: 5px;">
+                        </div>
+                        <button type="submit" class="btn btn-success">Save Guide</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Guide Modal -->
+    <div class="modal fade" id="editGuideModal" tabindex="-1" aria-labelledby="editGuideModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editGuideModalLabel">Edit Guide</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editGuideForm" method="POST" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="editGuideName" name="editGuideName" >
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" id="editGuideEmail" name="editGuideEmail" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" id="editGuideDescription" name="editGuideDescription" ></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Payment per Day</label>
+                            <input type="number" class="form-control" id="editGuidePayment" name="editGuidePayment" >
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">LinkedIn URL</label>
+                            <input type="url" class="form-control" id="editGuideLinkedIn" name="editGuideLinkedIn" >
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Upload Image</label>
+                            <input type="file" class="form-control" id="editGuideImage" name="editGuideImage" accept="image/*">
+                            <img id="editImagePreview" class="mt-2" style="width: 80px; height: 80px; display: none; border-radius: 5px;">
+                        </div>
+                        <button type="submit" class="btn btn-success">Update Guide</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="packages" class="hidden">
@@ -158,6 +278,22 @@
             </tr>
             </thead>
             <tbody id="paymentTableBody"></tbody>
+        </table>
+    </div>
+
+    <div id="destinations" class="hidden">
+        <h1>Destinations Management</h1>
+        <!--<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</button>-->
+        <table class="table table-bordered mt-3">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody id="destinationTableBody"></tbody>
         </table>
     </div>
 </div>
@@ -195,11 +331,12 @@
         // Load data dynamically when a panel is clicked
         switch (panelId) {
             case 'users': fetchUsers(); break;
-            case 'vehicles': fetchVehicles(); break;
+            case 'vehicles': /*fetchVehicles()*/; break;
             case 'bookings': ; break;
             case 'packages': ; break;
             case 'payments': ; break;
             case 'destinations': ; break;
+            case 'guides': ; break;
             case 'settings': ; break;
             // Add more cases if needed
         }
@@ -272,6 +409,7 @@
 </script>
 
 <script src="AdminScripts/admin-vehicle.js"></script>
+<script src="AdminScripts/admin-guide.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

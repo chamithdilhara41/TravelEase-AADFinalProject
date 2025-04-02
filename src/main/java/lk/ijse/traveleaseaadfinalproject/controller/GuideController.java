@@ -2,6 +2,7 @@ package lk.ijse.traveleaseaadfinalproject.controller;
 
 import lk.ijse.traveleaseaadfinalproject.dto.GuideDTO;
 import lk.ijse.traveleaseaadfinalproject.dto.ResponseDTO;
+import lk.ijse.traveleaseaadfinalproject.service.EmailService;
 import lk.ijse.traveleaseaadfinalproject.service.GuideService;
 import lk.ijse.traveleaseaadfinalproject.util.VarList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class GuideController {
 
     @Autowired
     private GuideService guideService;
+
+    @Autowired
+    private EmailService emailService;
 
     private static final String UPLOAD_DIR = "src/main/resources/templates/uploads/";
 
@@ -57,6 +61,7 @@ public class GuideController {
 
             switch (res) {
                 case VarList.Created:
+                    emailService.sendGuideRegistrationEmail(email, fullName);   // ✅ Send email after successful registration
                     return ResponseEntity.status(HttpStatus.CREATED)
                             .body(new ResponseDTO(VarList.Created, "Guide Saved Successfully", guideDTO));
                 case VarList.Not_Acceptable:
@@ -90,11 +95,11 @@ public class GuideController {
     @PostMapping("/update/{email}")
     public ResponseEntity<ResponseDTO> updateGuide(
             @PathVariable String email,
-            @RequestParam("fullName") String fullName,
-            @RequestParam("description") String description,
-            @RequestParam(value = "imageUrl", required = false) MultipartFile image,
-            @RequestParam("linkedin") String linkedin,
-            @RequestParam("paymentPerDay") String paymentPerDay) {
+            @RequestParam("editGuideName") String fullName,
+            @RequestParam("editGuideDescription") String description,
+            @RequestParam(value = "editGuideImage", required = false) MultipartFile image,
+            @RequestParam("editGuideLinkedIn") String linkedin,
+            @RequestParam("editGuidePayment") String paymentPerDay) {
 
         try {
             GuideDTO guideDTO = new GuideDTO();
