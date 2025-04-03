@@ -11,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Component
+
 public class ResponseDTO {
     private int code;
     private String message;

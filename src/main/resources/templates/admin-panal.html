@@ -283,19 +283,135 @@
 
     <div id="destinations" class="hidden">
         <h1>Destinations Management</h1>
-        <!--<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</button>-->
+
+        <!-- Add Destination Button -->
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDestinationModal">
+            Add Destination
+        </button>
+
+        <!-- Destinations Table -->
         <table class="table table-bordered mt-3">
             <thead>
             <tr>
+                <th>ID</th>
                 <th>Name</th>
-                <th>Email</th>
-                <th>Role</th>
+                <th>Description</th>
+                <th>Location</th>
+                <th>Category</th>
+                <th>Cost In day (RS.)</th>
+                <th>Image</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody id="destinationTableBody"></tbody>
         </table>
     </div>
+
+    <!-- Add Destination Modal -->
+    <div class="modal fade" id="addDestinationModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Add Destination</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addDestinationForm" method="POST" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="destinationName" class="form-label">Destination Name</label>
+                            <input type="text" class="form-control" id="destinationName" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="destinationDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="destinationDescription" name="description" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="destinationLocation" class="form-label">Location</label>
+                            <input type="text" class="form-control" id="destinationLocation" name="location" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="destinationCost" class="form-label">Cost in day </label>
+                            <input type="text" class="form-control" id="destinationCost" name="costPerDay" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="destinationCategory" class="form-label">Category</label>
+                            <select class="form-control" id="destinationCategory" name="category" required>
+                                <option value="beach">Beach</option>
+                                <option value="mountain">Mountain</option>
+                                <option value="forest">Forest</option>
+                                <option value="city">City</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="destinationImage" class="form-label">Upload Image</label>
+                            <input type="file" class="form-control" id="destinationImage" name="imageUrl" accept="image/*" required>
+                        </div>
+                        <!-- Image Preview -->
+                        <div class="mb-3">
+                            <img id="imgPreview" src="#" alt="Preview" style="width: 80px; height: 80px; display: none; border-radius: 5px;">
+                        </div>
+
+                        <button type="submit" class="btn btn-success">Save Destination</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Destination Modal -->
+    <div class="modal fade" id="editDestinationModal" tabindex="-1" aria-labelledby="editModalTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalTitle">Edit Destination</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editDestinationForm" method="POST" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="editDestinationId" class="form-label">Id</label>
+                            <input type="number" class="form-control" id="editDestinationId" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editDestinationName" class="form-label">Destination Name</label>
+                            <input type="text" class="form-control" id="editDestinationName" name="editDestinationName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editDestinationDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="editDestinationDescription" name="editDestinationDescription" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editDestinationLocation" class="form-label">Location</label>
+                            <input type="text" class="form-control" id="editDestinationLocation" name="editDestinationLocation" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editDestinationCategory" class="form-label">Category</label>
+                            <select class="form-control" id="editDestinationCategory" name="editDestinationCategory" required>
+                                <option value="beach">Beach</option>
+                                <option value="mountain">Mountain</option>
+                                <option value="forest">Forest</option>
+                                <option value="city">City</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editDestinationCostPerDay" class="form-label">Cost Per Day</label>
+                            <input type="number" class="form-control" id="editDestinationCostPerDay" name="editDestinationCostPerDay" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editDestinationImage" class="form-label">Upload Image</label>
+                            <input type="file" class="form-control" id="editDestinationImage" name="editDestinationImage" accept="image/*">
+                        </div>
+                        <!-- Image Preview -->
+                        <div class="mb-3">
+                            <img id="editImgPreview" src="#" alt="Preview" style="width: 100px; height: 100px; display: none; border-radius: 5px;">
+                        </div>
+                        <button type="submit" class="btn btn-success">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <!--&lt;!&ndash; Add User Modal &ndash;&gt;
@@ -363,8 +479,6 @@
         });
     }
 
-
-
     function deleteUser(id) {
         $.ajax({
             url: `/api/users/${id}`,
@@ -410,6 +524,7 @@
 
 <script src="AdminScripts/admin-vehicle.js"></script>
 <script src="AdminScripts/admin-guide.js"></script>
+<script src="AdminScripts/admin-destination.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

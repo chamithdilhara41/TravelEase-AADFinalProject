@@ -72,6 +72,7 @@ $(document).ready(function () {
                 $("#addGuideForm")[0].reset();
                 $("#imagePreview").hide();
                 fetchAllGuides();
+                $("#editGuideModal").modal("hide");
                 // after and go to mail for the guide your registration is success, how to do that plz gide me
             },
             error: function () {
@@ -150,6 +151,7 @@ $(document).ready(function () {
             contentType: false,
             success: function () {
                 alert("Guide updated successfully!");
+                $("#editGuideModal").modal("hide");
                 fetchAllGuides();
             },
             error: function () {
