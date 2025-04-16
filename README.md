@@ -47,7 +47,7 @@ TravelEase is a full-featured web-based travel booking system designed to help f
 ## 📹 Demo Video
 
 🎬 Watch the full walkthrough here:  
-**[Spring Boot Project - IJSE - GDSE<69> - <Pandura> - Chamith Dilhara - 2nd Semester Final Project](https://youtu.be/your-video-id)**
+**[Spring Boot Project - IJSE - GDSE69 - Pandura - Chamith Dilhara - 2nd Semester Final Project](https://youtu.be/your-video-id)**
 
 > ⚠️ Don’t forget to update the video link with your actual YouTube demo and batch info.
 
