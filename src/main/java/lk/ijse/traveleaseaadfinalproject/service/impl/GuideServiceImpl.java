@@ -97,4 +97,9 @@ public class GuideServiceImpl implements GuideService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public int getTotalGuideCount() {
+        return (int) guideRepository.count();
+    }
+
 }

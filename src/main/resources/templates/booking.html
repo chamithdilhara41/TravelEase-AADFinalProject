@@ -232,17 +232,75 @@
                         <button class="btn btn-primary btn-lg" id="confirmBookingBtn" type="submit">Confirm Booking</button>
                     </div>
 
+                    <!-- Payment Modal -->
+                    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content p-4">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="paymentModalLabel">Complete Your Payment</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+
+                                <div class="modal-body">
+                                    <p><strong>Email:</strong> <span id="paymentEmail"></span></p>
+                                    <p><strong>Total Amount:</strong> <span class="text-success fw-bold">LKR <span id="paymentTotal"></span></span></p>
+
+                                    <form id="cardPaymentForm">
+                                        <div class="mb-3">
+                                            <label for="cardNumber" class="form-label">Card Number</label>
+                                            <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456" required>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="expiryDate" class="form-label">Expiry Date</label>
+                                                <input type="text" class="form-control" id="expiryDate" placeholder="MM/YY" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="cvv" class="form-label">CVV</label>
+                                                <input type="password" class="form-control" id="cvv" placeholder="123" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="cardHolderName" class="form-label">Card Holder Name</label>
+                                            <input type="text" class="form-control" id="cardHolderName" placeholder="Chamith Dilhara" required>
+                                        </div>
+
+                                        <button type="submit" id="makePaymentBtn" class="btn btn-success w-100 mt-3">Pay Now</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
                     <script>
+                        let bookingData = null;
+
+                        // Step 1: On Confirm Booking → show Payment Modal
                         $("#confirmBookingBtn").click(function (e) {
                             e.preventDefault();
 
-                            const BookingDTO = {
-                                packageName: $("#summaryPackage").text().trim(),
-                                guideEmail: $("#summaryGuideEmail").text().trim(),
-                                vehicleNumber: $("#summaryVehicleNumber").text().trim(),
+                            const guideEmail = $("#summaryGuideEmail").text().trim();
+                            const vehicleNumber = $("#summaryVehicleNumber").text().trim();
+                            const packageName = $("#summaryPackage").text().trim();
+                            const userEmail = $("#userEmail").val().trim();
+                            const bookingDate = $("#summaryBookingDate").val();
+
+                            if (!packageName || !guideEmail || !vehicleNumber || !userEmail || !bookingDate) {
+                                alert("Please select package, guide, vehicle, and booking date before confirming.");
+                                return;
+                            }
+
+                            bookingData = {
+                                packageName: packageName,
+                                guideEmail: guideEmail,
+                                vehicleNumber: vehicleNumber,
                                 estimatedDays: parseInt($("#summaryDays").text()),
-                                userEmail: $("#userEmail").val().trim(), // make sure you have it in the page
-                                bookingDate: $("#summaryBookingDate").val(),
+                                userEmail: userEmail,
+                                bookingDate: bookingDate,
                                 checkoutDate: $("#checkoutDate").val(),
                                 numberOfPeople: parseInt($("#summaryPeople").text()),
                                 basePrice: parseFloat($("#summaryBase").text().replace("LKR", "").trim()),
@@ -250,23 +308,102 @@
                                 totalPrice: parseFloat($("#summaryTotal").text().replace("LKR", "").trim())
                             };
 
+                            $("#paymentEmail").text(userEmail);
+                            $("#paymentTotal").text(bookingData.totalPrice.toFixed(2));
+
+                            $("#paymentModal").modal("show");
+                        });
+
+                        // Step 2: On Pay Now → Validate card and save booking + payment
+                        $("#makePaymentBtn").click(function (e) {
+                            e.preventDefault();
+
+                            if (!bookingData) {
+                                alert("No booking data available.");
+                                return;
+                            }
+
+                            // Get card details from form
+                            const cardHolderName = $("#cardHolderName").val().trim();
+                            const cardNumber = $("#cardNumber").val().trim();
+                            const expiryDate = $("#expiryDate").val().trim();
+                            const cvv = $("#cvv").val().trim();
+
+                            // Basic validation
+                            if (!cardHolderName || !cardNumber || !expiryDate || !cvv) {
+                                alert("Please fill in all card payment details.");
+                                return;
+                            }
+
+                            // Save booking first
                             $.ajax({
                                 url: "http://localhost:8080/api/v1/booking/save",
                                 type: "POST",
                                 contentType: "application/json",
-                                data: JSON.stringify(BookingDTO),
+                                data: JSON.stringify(bookingData),
                                 success: function (response) {
-                                    alert("Booking successful!");
-                                    // Optionally reload or update UI
+                                    const booking = response.data;
+
+                                    const paymentDTO = {
+                                        userEmail: booking.userEmail,
+                                        amount: booking.totalPrice,
+                                        cardHolderName: cardHolderName,
+                                        cardNumber: cardNumber,
+                                        expiryDate: expiryDate,
+                                        cvv: cvv,
+                                        paymentDate: new Date().toISOString(),
+                                        status: "SUCCESS",
+                                        paymentMethod: "CARD",
+                                        bookingId: booking.id
+                                    };
+
+                                    // Save payment
+                                    $.ajax({
+                                        url: "http://localhost:8080/api/v1/payment/save",
+                                        type: "POST",
+                                        contentType: "application/json",
+                                        data: JSON.stringify(paymentDTO),
+                                        success: function () {
+                                            alert("Payment and Booking successful!");
+                                            $("#paymentModal").modal("hide");
+                                            clearAllFields();
+                                        },
+                                        error: function () {
+                                            alert("Booking saved but payment failed!");
+                                        }
+                                    });
                                 },
-                                error: function (xhr) {
-                                    console.error("Booking failed:", xhr.responseText);
-                                    alert("Booking failed!");
+                                error: function () {
+                                    alert("Booking failed. Payment not processed.");
                                 }
                             });
                         });
 
+                        // Clear all form fields
+                        function clearAllFields() {
+                            bookingData = null;
+
+                            $("#userEmail").val('');
+                            $("#summaryBookingDate").val('');
+                            $("#checkoutDate").val('');
+
+                            $("#summaryPackage").text('');
+                            $("#summaryGuideEmail").text('');
+                            $("#summaryVehicleNumber").text('');
+                            $("#summaryDays").text('');
+                            $("#summaryPeople").text('');
+                            $("#summaryBase").text('');
+                            $("#summaryGuideFee").text('');
+                            $("#summaryTotal").text('');
+
+                            $("#cardHolderName").val('');
+                            $("#cardNumber").val('');
+                            $("#expiryDate").val('');
+                            $("#cvv").val('');
+                        }
                     </script>
+
+
 
                 </div>
             </div>

@@ -61,6 +61,8 @@ public class WebSecurityConfig {
                                 "/api/v1/vehicle/**",
                                 "/api/v1/package/**",
                                 "/api/v1/booking/**",
+                                "/api/v1/dashboard/**",
+                                "/api/v1/payment/**",
                                 "/api/v1/auth/refreshToken",
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",

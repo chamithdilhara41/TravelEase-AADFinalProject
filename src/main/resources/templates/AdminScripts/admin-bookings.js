@@ -26,11 +26,7 @@ $(document).ready(function () {
                         <td>LKR ${booking.guideFee.toFixed(2)}</td>
                         <td>LKR ${booking.basePrice.toFixed(2)}</td>
                         <td>LKR ${booking.totalPrice.toFixed(2)}</td>
-                         <td>
-                            <button class="btn btn-sm btn-primary" onclick="editBooking('${booking.id}')">Edit</button>
-                            <button class="btn btn-sm btn-danger" onclick="deleteBooking('${booking.id}')">Delete</button>
-                            <button class="btn btn-sm btn-info" onclick="viewBooking('${booking.id}')">View</button>
-                        </td>
+                         
                     </tr>
                 `;
                     $("#bookingTableBody").append(row);

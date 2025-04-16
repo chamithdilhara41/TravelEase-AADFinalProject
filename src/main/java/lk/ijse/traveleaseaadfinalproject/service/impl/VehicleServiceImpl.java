@@ -137,5 +137,9 @@ public class VehicleServiceImpl implements VehicleService {
                 .map(vehicle -> modelMapper.map(vehicle, VehicleDTO.class))
                 .collect(Collectors.toList());
     }
+    @Override
+    public int getTotalVehicleCount() {
+        return (int) vehicleRepository.count();
+    }
 
 }

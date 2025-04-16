@@ -72,6 +72,7 @@
 
 </div>
 <div class="content">
+
     <div class="container mt-5" id="dashboard">
         <h2 class="mb-4">Welcome to TravelEase Dashboard</h2>
         <div class="row g-4">
@@ -114,6 +115,85 @@
                     </div>
                 </div>
             </div>
+
+
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+            <div class="container mt-5">
+                <div class="row">
+                    <!-- Bookings Per Day -->
+                    <div class="col-md-6">
+                        <div class="card shadow p-3 mb-5 bg-white rounded">
+                            <h5 class="text-center">Bookings Per Day</h5>
+                            <canvas id="bookingsPerDayChart" height="450"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Total Price Per Booking -->
+                    <div class="col-md-6">
+                        <div class="card shadow p-3 mb-5 bg-white rounded">
+                            <h5 class="text-center">Total Price Per Booking</h5>
+                            <canvas id="totalPricePerBookingChart" height="450"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                $(document).ready(function () {
+                    loadBookingsPerDayChart();
+                    loadTotalPricePerBookingChart();
+                });
+
+                function loadBookingsPerDayChart() {
+                    $.ajax({
+                        url: "http://localhost:8080/api/v1/dashboard/chart/bookings-per-day",
+                        method: "GET",
+                        success: function (res) {
+                            const labels = res.data.map(item => item.date);
+                            const data = res.data.map(item => item.count);
+
+                            new Chart(document.getElementById('bookingsPerDayChart'), {
+                                type: 'bar',
+                                data: {
+                                    labels: labels,
+                                    datasets: [{
+                                        label: 'Bookings Per Day',
+                                        data: data,
+                                        backgroundColor: 'rgba(54, 162, 235, 0.6)'
+                                    }]
+                                }
+                            });
+                        }
+                    });
+                }
+
+                function loadTotalPricePerBookingChart() {
+                    $.ajax({
+                        url: "http://localhost:8080/api/v1/dashboard/chart/total-price-per-booking",
+                        method: "GET",
+                        success: function (res) {
+                            const labels = res.data.map(item => "Booking " + item.bookingId);
+                            const data = res.data.map(item => item.total);
+
+                            new Chart(document.getElementById('totalPricePerBookingChart'), {
+                                type: 'line',
+                                data: {
+                                    labels: labels,
+                                    datasets: [{
+                                        label: 'Total Price Per Booking',
+                                        data: data,
+                                        fill: false,
+                                        borderColor: 'rgba(255, 99, 132, 0.8)',
+                                        tension: 0.1
+                                    }]
+                                }
+                            });
+                        }
+                    });
+                }
+            </script>
             <script>
                 $(document).ready(function () {
                     loadDashboardCounts();
@@ -123,10 +203,10 @@
                     $.ajax({
                         url: "http://localhost:8080/api/v1/dashboard/counts",
                         method: "GET",
-                        success: function (data) {
-                            $('#totalBookings').text(data.totalBookings);
-                            $('#totalVehicles').text(data.totalVehicles);
-                            $('#totalGuides').text(data.totalGuides);
+                        success: function (response) {
+                            $('#totalBookings').text(response.data.totalBookings);
+                            $('#totalVehicles').text(response.data.totalVehicles);
+                            $('#totalGuides').text(response.data.totalGuides);
                         },
                         error: function () {
                             alert("Failed to load dashboard data.");
@@ -137,8 +217,6 @@
 
         </div>
     </div>
-
-
 
     <div id="vehicles" class="hidden">
         <h1>Vehicle Management</h1>
@@ -183,35 +261,34 @@
             </thead>
             <tbody id="userTableBody"></tbody>
         </table>
-    </div>
-    <script>
-        // Load all users when page is ready
-        $(document).ready(function () {
-            loadAllUsers();
-        });
-
-        // Function to load users via AJAX
-        function loadAllUsers() {
-            $.ajax({
-                url: "http://localhost:8080/api/v1/user/getAll",
-                method: "GET",
-                success: function (users) {
-                    $("#userTableBody").empty();
-                    window.allUsers = users.data;  // Store all users in a global variable for search
-                    renderTable(users.data);  // Render the table initially with all users
-                },
-                error: function (xhr) {
-                    console.error("Error fetching users:", xhr.responseText);
-                    alert("Failed to load users.");
-                }
+        <script>
+            // Load all users when page is ready
+            $(document).ready(function () {
+                loadAllUsers();
             });
-        }
 
-        // Function to render the user table
-        function renderTable(users) {
-            $("#userTableBody").empty(); // Clear the table body
-            users.forEach(user => {
-                $("#userTableBody").append(`
+            // Function to load users via AJAX
+            function loadAllUsers() {
+                $.ajax({
+                    url: "http://localhost:8080/api/v1/user/getAll",
+                    method: "GET",
+                    success: function (users) {
+                        $("#userTableBody").empty();
+                        window.allUsers = users.data;  // Store all users in a global variable for search
+                        renderTable(users.data);  // Render the table initially with all users
+                    },
+                    error: function (xhr) {
+                        console.error("Error fetching users:", xhr.responseText);
+                        alert("Failed to load users.");
+                    }
+                });
+            }
+
+            // Function to render the user table
+            function renderTable(users) {
+                $("#userTableBody").empty(); // Clear the table body
+                users.forEach(user => {
+                    $("#userTableBody").append(`
             <tr>
                 <td>${user.name}</td>
                 <td>${user.email}</td>
@@ -221,41 +298,41 @@
                 </td>
             </tr>
         `);
-            });
-        }
-
-        // Function to filter users based on the search input
-        function searchUsers() {
-            const searchTerm = $("#searchInput").val().toLowerCase();  // Get the search input value
-            const filteredUsers = window.allUsers.filter(user => {
-                return user.name.toLowerCase().includes(searchTerm) || user.email.toLowerCase().includes(searchTerm);
-            });
-            renderTable(filteredUsers);  // Re-render the table with the filtered users
-        }
-
-        // Function to delete user
-        function deleteUser(email) {
-            console.log("Attempting to delete user with email:", email); // Debug log
-            if (confirm("Are you sure you want to delete this user?")) {
-                $.ajax({
-                    url: `http://localhost:8080/api/v1/user/delete/${email}`,
-                    method: "DELETE",
-                    success: function (response) {
-                        console.log("Delete response:", response);  // Debug log
-                        alert("User deleted successfully.");
-                        loadAllUsers();  // Reload the users after deletion
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("Error deleting user:", xhr.responseText);  // Debug log
-                        alert("Failed to delete user.");
-                    }
                 });
             }
-        }
+
+            // Function to filter users based on the search input
+            function searchUsers() {
+                const searchTerm = $("#searchInput").val().toLowerCase();  // Get the search input value
+                const filteredUsers = window.allUsers.filter(user => {
+                    return user.name.toLowerCase().includes(searchTerm) || user.email.toLowerCase().includes(searchTerm);
+                });
+                renderTable(filteredUsers);  // Re-render the table with the filtered users
+            }
+
+            // Function to delete user
+            function deleteUser(email) {
+                console.log("Attempting to delete user with email:", email); // Debug log
+                if (confirm("Are you sure you want to delete this user?")) {
+                    $.ajax({
+                        url: `http://localhost:8080/api/v1/user/delete/${email}`,
+                        method: "DELETE",
+                        success: function (response) {
+                            console.log("Delete response:", response);  // Debug log
+                            alert("User deleted successfully.");
+                            loadAllUsers();  // Reload the users after deletion
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error deleting user:", xhr.responseText);  // Debug log
+                            alert("Failed to delete user.");
+                        }
+                    });
+                }
+            }
 
 
-    </script>
-
+        </script>
+    </div>
 
     <div id="bookings" class="hidden">
         <h1>Booking Management</h1>
@@ -276,8 +353,6 @@
                 <th>Guide Fee</th>
                 <th>Base Price</th>
                 <th>Total Price</th>
-                <th>Status</th>
-                <th>Actions</th>
             </tr>
             </thead>
             <tbody id="bookingTableBody"></tbody>
@@ -473,7 +548,6 @@
         </div>
     </div>
 
-
     <!-- Edit Package Modal -->
     <div class="modal fade" id="editPackageModal" tabindex="-1" aria-labelledby="editPackageModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -519,22 +593,70 @@
         </div>
     </div>
 
-
-
     <div id="payments" class="hidden">
         <h1>Payment Management</h1>
-        <!--<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</button>-->
+
+        <input type="text" id="searchEmail" class="form-control mb-3" placeholder="Search by user email...">
+
         <table class="table table-bordered mt-3">
             <thead class="table-dark">
             <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Actions</th>
+                <th>ID</th>
+                <th>User Email</th>
+                <th>Amount</th>
+                <th>Date</th>
             </tr>
             </thead>
             <tbody id="paymentTableBody"></tbody>
         </table>
+
+        <script>
+            let allPayments = []; // Store all payments globally
+
+            function loadAllPayments() {
+                $.ajax({
+                    url: "http://localhost:8080/api/v1/payment/getAll",
+                    type: "GET",
+                    success: function (response) {
+                        allPayments = response.data; // Save for filtering
+                        renderPayments(allPayments); // Initial render
+                    },
+                    error: function () {
+                        alert("Failed to load payments.");
+                    }
+                });
+            }
+
+            function renderPayments(payments) {
+                const tbody = $("#paymentTableBody");
+                tbody.empty();
+
+                payments.forEach(payment => {
+                    const row = `
+            <tr>
+                <td>${payment.id}</td>
+                <td>${payment.userEmail}</td>
+                <td>LKR ${payment.amount.toFixed(2)}</td>
+                <td>${payment.paymentDate}</td>
+            </tr>
+        `;
+                    tbody.append(row);
+                });
+            }
+
+            // Live filter
+            $("#searchEmail").on("input", function () {
+                const query = $(this).val().toLowerCase();
+                const filtered = allPayments.filter(p => p.userEmail.toLowerCase().includes(query));
+                renderPayments(filtered);
+            });
+
+            // Load on page ready
+            $(document).ready(function () {
+                loadAllPayments();
+            });
+
+        </script>
     </div>
 
     <div id="destinations" class="hidden">

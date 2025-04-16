@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -77,6 +78,11 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    public int getTotalBookings() {
+        return (int) bookingRepository.count();
+    }
+
+    @Override
     public List<BookingDTO> getAllBookings() {
         List<Booking> bookings = bookingRepository.findAll();
         return bookings.stream().map(this::convertToDTO).collect(Collectors.toList());
@@ -101,6 +107,14 @@ public class BookingServiceImpl implements BookingService {
         dto.setGuideFee(booking.getGuideFee());
         dto.setTotalPrice(booking.getTotalPrice());
         return dto;
+    }
+    @Override
+    public List<Map<String, Object>> getBookingsPerDay() {
+        return bookingRepository.findBookingsPerDay();
+    }
+    @Override
+    public List<Map<String, Object>> getTotalPricePerBooking() {
+        return bookingRepository.findTotalPricePerBooking();
     }
 
 

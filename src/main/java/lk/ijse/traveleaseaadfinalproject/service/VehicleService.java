@@ -26,6 +26,8 @@ public interface VehicleService {
 
     List<VehicleDTO> getVehiclesByUserEmail(String email);
 
+    int getTotalVehicleCount();
+
    /* VehicleDTO getVehicleByNumber(String vehicleNumber);
 
     int updateVehicle(String vehicleNumber, VehicleDTO updatedVehicle);
