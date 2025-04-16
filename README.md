@@ -1,6 +1,6 @@
 # 🌍 TravelEase - Sri Lanka Travel Booking Platform
 
-**TravelEase** is a full-featured web-based travel booking system designed to help foreign travelers explore Sri Lanka with ease. Users can book tour packages, choose languages, hire certified guides, select vehicles, and plan multi-destination trips — all in one platform.
+**TravelEase** is a full-featured web-based travel booking system designed to help foreign travelers explore Sri Lanka with ease. Users can book tour packages, hire certified guides, select vehicles, and plan multi-destination trips — all in one platform.
 
 ---
 
