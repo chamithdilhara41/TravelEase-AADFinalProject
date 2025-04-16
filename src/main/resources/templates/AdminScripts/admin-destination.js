@@ -73,7 +73,7 @@ $(document).ready(function () {
                                     data-bs-target="#editDestinationModal">
                                     Edit
                                 </button>
-                                <button class="btn btn-danger btn-sm" >Delete</button>
+                                <button class="btn btn-danger btn-sm delete-destination-btn" data-id="${destination.id}">Delete</button>
                             </td>
                         </tr>
                     `);
@@ -83,6 +83,8 @@ $(document).ready(function () {
                 console.error("Error fetching destinations:", error);
             }
         });
+
+
     }
 
     loadDestinations();
@@ -154,6 +156,25 @@ $(document).ready(function () {
                 }
             });
         });
+    });
+    // Delete Destination functionality
+    $(document).on("click", ".delete-destination-btn", function () {
+        let id = $(this).data("id");
+        console.log(id);
+
+        if (confirm("Are you sure you want to delete this destination?")) {
+            $.ajax({
+                url: `http://localhost:8080/api/v1/destination/delete/${id}`,
+                type: "DELETE",
+                success: function () {
+                    alert("Destination deleted successfully!");
+                    loadDestinations();
+                },
+                error: function () {
+                    alert("Error deleting destination.");
+                }
+            });
+        }
     });
 
 });

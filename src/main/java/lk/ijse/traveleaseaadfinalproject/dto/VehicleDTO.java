@@ -20,6 +20,8 @@ public class VehicleDTO {
     private String insuranceDocument;
     private String registrationDocument;
 
+    private String booked;
+
     private List<String> vehicleImages;
 
     private String status;  // New field for status

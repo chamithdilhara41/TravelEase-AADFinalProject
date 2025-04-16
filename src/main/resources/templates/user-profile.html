@@ -85,7 +85,7 @@
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><span>Hi,user name</span></a>
                         <div class="dropdown-menu border-0 rounded-0 m-0 ">
                             <a href="#" class="dropdown-item" onclick="loadPage('user-profile.html')">User Profile</a>
-                            <a href="#" class="dropdown-item" onclick="loadPage('bookings.html')">Bookings</a>
+                            <a href="#" class="dropdown-item" onclick="loadPage('user-bookings.html')">Bookings</a>
                             <a href="#" class="dropdown-item text-danger">Log out</a>
                         </div>
                     </div>
@@ -141,11 +141,12 @@
     <div id="vehicleDetails" class="card border-success d-none mt-3">
         <div class="card-body">
             <h5 class="card-title text-success">Vehicle Details</h5>
-            <!--<p><strong>Vehicle Type:</strong> Car</p>
-            <p><strong>License Plate:</strong> ABC-1234</p>-->
-            <button class="btn btn-success" onclick="loadPage('vehicle-register.html')">View Vehicle details</button>
+            <button class="btn btn-success" onclick="loadVehicleDetails()">View Vehicle details</button>
         </div>
     </div>
+
+
+
     <!-- Edit User Modal -->
     <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -171,9 +172,71 @@
         </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="vehicleModal" tabindex="-1" aria-labelledby="vehicleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="vehicleModalLabel">Vehicle Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Vehicle Number</th>
+                            <th>Model</th>
+                            <th>Type</th>
+                            <th>Fuel Type</th>
+                            <th>Booked</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody id="vehicleTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    function loadVehicleDetails() {
+        const email = getFromLocalStorage("email");
+        if (!email) {
+            alert("User email not found in local storage!");
+            return;
+        }
 
-    <!-- Vehicle Section -->
+        $.ajax({
+            url: "http://localhost:8080/api/v1/vehicle/byUserEmail/" + email,
+            method: "GET",
+            success: function (vehicles) {
+                let html = "";
+                vehicles.forEach(vehicle => {
+                    html += `<tr>
+                            <td>${vehicle.vehicleNumber}</td>
+                            <td>${vehicle.model}</td>
+                            <td>${vehicle.vehicleType}</td>
+                            <td>${vehicle.fuelType}</td>
+                            <td>${vehicle.booked}</td>
+                            <td>${vehicle.status}</td>
+                         </tr>`;
+                });
+                $("#vehicleTableBody").html(html);
+                $("#vehicleModal").modal("show");
+            },
+            error: function () {
+                alert("Failed to load vehicle details.");
+            }
+        });
+    }
+
+</script>
+
 </div>
+
+
+
+
 <!-- Modal for No User Logged In -->
 <div class="modal fade" id="noUserModal" tabindex="-1" aria-labelledby="noUserModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">

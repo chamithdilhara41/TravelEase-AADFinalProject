@@ -89,4 +89,12 @@ public class GuideServiceImpl implements GuideService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<GuideDTO> getAvailableGuides() {
+        List<Guide> guides = guideRepository.findAllByBookedAndStatus("NO", "ACTIVE");
+        return guides.stream()
+                .map(guide -> modelMapper.map(guide, GuideDTO.class))
+                .collect(Collectors.toList());
+    }
+
 }

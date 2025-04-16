@@ -61,6 +61,7 @@ public class VehicleController {
             vehicleDTO.setFuelType(fuelType);
             vehicleDTO.setStatus("PENDING");
             vehicleDTO.setUserEmail(userEmail);
+            vehicleDTO.setBooked("NO");
 
             // Handle the insurance document
             if (insuranceDocument != null && !insuranceDocument.isEmpty()) {
@@ -149,14 +150,74 @@ public class VehicleController {
         }
     }
 
-    @GetMapping("/status/{status}")
-    public ResponseEntity<ResponseDTO> getVehiclesByStatus(@PathVariable String status) {
+    @PutMapping("/deactivate/{vehicleNumber}")
+    public ResponseEntity<ResponseDTO> deactivateVehicle(@PathVariable String vehicleNumber) {
         try {
-            List<VehicleDTO> vehicles = vehicleService.getVehiclesByStatus(status);
-            return ResponseEntity.ok(new ResponseDTO(VarList.Created, "Fetched Vehicles by Status", vehicles));
+            int res = vehicleService.deactivateVehicle(vehicleNumber);
+
+            switch (res) {
+                case VarList.Created:
+                    return ResponseEntity.status(HttpStatus.OK)
+                            .body(new ResponseDTO(VarList.Created, "Vehicle Deactivated Successfully", null));
+                case VarList.Not_Found:
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                            .body(new ResponseDTO(VarList.Not_Found, "Vehicle Not Found", null));
+                default:
+                    return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+                            .body(new ResponseDTO(VarList.Bad_Gateway, "Error", null));
+            }
+
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));
         }
     }
+
+    @PutMapping("/activate/{vehicleNumber}")
+    public ResponseEntity<ResponseDTO> activateVehicle(@PathVariable String vehicleNumber) {
+        try {
+            int res = vehicleService.activateVehicle(vehicleNumber);
+
+            switch (res) {
+                case VarList.Created:
+                    return ResponseEntity.status(HttpStatus.OK)
+                            .body(new ResponseDTO(VarList.Created, "Vehicle Activated Successfully", null));
+                case VarList.Not_Found:
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                            .body(new ResponseDTO(VarList.Not_Found, "Vehicle Not Found", null));
+                default:
+                    return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+                            .body(new ResponseDTO(VarList.Bad_Gateway, "Error", null));
+            }
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));
+        }
+    }
+
+
+    @GetMapping("/available")
+    public ResponseEntity<ResponseDTO> getAvailableVehicles() {
+        try {
+            List<VehicleDTO> availableVehicles = vehicleService.getAvailableVehicles();
+            if (availableVehicles.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.OK)
+                        .body(new ResponseDTO(VarList.Not_Found, "No available vehicles at the moment", null));
+            } else {
+                return ResponseEntity.status(HttpStatus.OK)
+                        .body(new ResponseDTO(VarList.Created, "Available Vehicles Retrieved Successfully", availableVehicles));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));
+        }
+    }
+
+    @GetMapping("/byUserEmail/{email}")
+    public ResponseEntity<List<VehicleDTO>> getVehiclesByUserEmail(@PathVariable String email) {
+        List<VehicleDTO> vehicles = vehicleService.getVehiclesByUserEmail(email);
+        return ResponseEntity.ok(vehicles);
+    }
+
 }

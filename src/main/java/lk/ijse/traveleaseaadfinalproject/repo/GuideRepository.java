@@ -13,4 +13,6 @@ public interface GuideRepository extends JpaRepository<Guide, Long> {
     boolean existsByEmail(String email);
     Optional<Guide> findByEmail(String email);
     List<Guide> findAll();
+
+    List<Guide> findAllByBookedAndStatus(String booked, String status);
 }

@@ -192,4 +192,22 @@ public class GuideController {
         }
     }
 
+    @GetMapping("/available")
+    public ResponseEntity<ResponseDTO> getAvailableGuides() {
+        try {
+            List<GuideDTO> availableGuides = guideService.getAvailableGuides();
+            if (availableGuides.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.OK)
+                        .body(new ResponseDTO(VarList.Not_Found, "No available guides at the moment", null));
+            } else {
+                return ResponseEntity.status(HttpStatus.OK)
+                        .body(new ResponseDTO(VarList.Created, "Available Guides Retrieved Successfully", availableGuides));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));
+        }
+    }
+
+
 }

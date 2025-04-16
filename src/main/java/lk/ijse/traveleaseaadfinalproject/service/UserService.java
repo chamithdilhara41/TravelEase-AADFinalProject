@@ -4,6 +4,7 @@ package lk.ijse.traveleaseaadfinalproject.service;
 import lk.ijse.traveleaseaadfinalproject.dto.UserDTO;
 import lk.ijse.traveleaseaadfinalproject.entity.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
@@ -13,4 +14,8 @@ public interface UserService {
     UserDTO getUserByEmail(String email);
 
     boolean updateUserRole(String email, String role);
+
+    List<UserDTO> getAllUsers();
+
+    boolean deleteUserByEmail(String email);
 }

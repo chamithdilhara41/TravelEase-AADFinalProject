@@ -26,6 +26,7 @@ public class Vehicle {
     private String fuelType;
     private String insuranceDocument;
     private String registrationDocument;
+    private String booked;
 
     @ElementCollection(fetch = FetchType.EAGER) // This enables storing multiple image paths
     private List<String> vehicleImages;

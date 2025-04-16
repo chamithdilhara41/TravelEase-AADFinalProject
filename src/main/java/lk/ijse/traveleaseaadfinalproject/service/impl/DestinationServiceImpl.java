@@ -1,5 +1,6 @@
 package lk.ijse.traveleaseaadfinalproject.service.impl;
 
+import jakarta.transaction.Transactional;
 import lk.ijse.traveleaseaadfinalproject.dto.DestinationDTO;
 import lk.ijse.traveleaseaadfinalproject.entity.Destination;
 import lk.ijse.traveleaseaadfinalproject.repo.DestinationRepository;
@@ -35,29 +36,34 @@ public class DestinationServiceImpl implements DestinationService {
 
     @Override
     public int updateDestination(Long id, DestinationDTO destinationDTO) {
-        Optional<Destination> optionalDestination = destinationRepository.findById(id);
-        if (optionalDestination.isPresent()) {
-            Destination existingDestination = optionalDestination.get();
+        Optional<Destination> existingDestinationOpt = destinationRepository.findById(id);
+        if (existingDestinationOpt.isPresent()) {
+            Destination existingDestination = existingDestinationOpt.get();
+
             existingDestination.setName(destinationDTO.getName());
             existingDestination.setDescription(destinationDTO.getDescription());
-            existingDestination.setImageUrl(destinationDTO.getImageUrl());
             existingDestination.setCostPerDay(destinationDTO.getCostPerDay());
             existingDestination.setLocation(destinationDTO.getLocation());
             existingDestination.setCategory(destinationDTO.getCategory());
 
+            if (destinationDTO.getImageUrl() != null) {
+                existingDestination.setImageUrl(destinationDTO.getImageUrl());
+            }
+
             destinationRepository.save(existingDestination);
-            return VarList.Created; // Successfully updated
+            return VarList.Created;
         }
-        return VarList.Not_Found; // Destination not found
+        return VarList.Not_Found;
     }
 
+    @Transactional
     @Override
     public int deleteDestination(Long id) {
         if (destinationRepository.existsById(id)) {
             destinationRepository.deleteById(id);
-            return VarList.Created; // Successfully deleted
+            return VarList.Created;
         }
-        return VarList.Not_Found; // Destination not found
+        return VarList.Not_Found;
     }
 
     @Override

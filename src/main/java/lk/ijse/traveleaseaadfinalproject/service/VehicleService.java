@@ -14,9 +14,17 @@ public interface VehicleService {
 
     boolean updateVehicleStatus(Long id, String status);
 
+    int deactivateVehicle(String vehicleNumber);
+
+    int activateVehicle(String vehicleNumber);
+
     List<VehicleDTO> getVehiclesByStatus(String status);
 
     int saveVehicle(@Valid VehicleDTO vehicleDTO);
+
+    List<VehicleDTO> getAvailableVehicles();
+
+    List<VehicleDTO> getVehiclesByUserEmail(String email);
 
    /* VehicleDTO getVehicleByNumber(String vehicleNumber);
 

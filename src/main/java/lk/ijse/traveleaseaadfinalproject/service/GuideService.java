@@ -17,4 +17,5 @@ public interface GuideService {
 
     List<GuideDTO> getAllGuides();
 
+    List<GuideDTO> getAvailableGuides();
 }

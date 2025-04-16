@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin(origins = "http://localhost:63342")
 @RestController
 @RequestMapping("api/v1/user")
@@ -74,5 +76,24 @@ public class UserController {
                 .body(new ResponseDTO(VarList.Not_Acceptable, "User not found", null));
     }
 
+    @GetMapping("/getAll")
+    public ResponseEntity<ResponseDTO> getAllUsers() {
+        List<UserDTO> users = userService.getAllUsers();
+        if (users.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ResponseDTO(VarList.Not_Found, "No users found", null));
+        }
+        return ResponseEntity.ok(new ResponseDTO(VarList.Created, "Users retrieved successfully", users));
+    }
 
+    @DeleteMapping("/delete/{email}")
+    public ResponseEntity<ResponseDTO> deleteUser(@PathVariable String email) {
+        boolean deleted = userService.deleteUserByEmail(email);
+        if (deleted) {
+            return ResponseEntity.ok(new ResponseDTO(VarList.Created, "User deleted successfully", null));
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ResponseDTO(VarList.Not_Found, "User not found", null));
+        }
+    }
 }

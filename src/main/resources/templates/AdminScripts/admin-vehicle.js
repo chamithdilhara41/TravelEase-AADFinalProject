@@ -23,6 +23,7 @@ $(document).ready(function () {
                     <td>${vehicle.color}</td>
                     <td>${vehicle.seatingCapacity}</td>
                     <td>${vehicle.fuelType}</td>
+                    <td>${vehicle.booked}</td>
                     <td><img src="uploads/${vehicle.insuranceDocument}" alt="Insurance Document" width="50" height="50"></td>
                     <td><img src="uploads/${vehicle.registrationDocument}" alt="Registration Document" width="50" height="50"></td>
                     <td>
@@ -38,8 +39,9 @@ $(document).ready(function () {
                     </td>
                     <td>${vehicle.status}</td>
                     <td>
-                        <button class="btn btn-warning btn-sm">Edit</button>
-                        <button class="btn btn-danger btn-sm">Delete</button>
+                        <button class="btn btn-success btn-sm activate-vehicle-btn" data-vehicle-number="${vehicle.vehicleNumber}">Active</button><br>
+                        <button class="btn btn-danger btn-sm deactivate-vehicle-btn" data-vehicle-number="${vehicle.vehicleNumber}">Deactive</button><br>
+                        <button class="btn btn-warning btn-sm">Edit</button><br>
                     </td>
                 </tr>
                 `;
@@ -50,6 +52,29 @@ $(document).ready(function () {
                 console.error("Error fetching vehicles:", xhr.responseText);
             }
         });
-
     }
+
+    $(document).on("click", ".activate-vehicle-btn, .deactivate-vehicle-btn", function () {
+
+        let vehicleNumber = $(this).data("vehicle-number");
+        let action = $(this).hasClass("activate-vehicle-btn") ? "activate" : "deactivate";
+        let url = `http://localhost:8080/api/v1/vehicle/${action}/${vehicleNumber}`; // Dynamic URL
+        let method = "PUT";
+
+        $.ajax({
+            url: url,
+            type: method,
+            contentType: "application/json",
+            success: function (response) {
+                alert(response.message);
+                fetchVehicles();
+            },
+            error: function (xhr, status, error) {
+                console.error("Error:", error);
+                alert("Something went wrong!");
+            }
+        });
+    });
+
 });
+

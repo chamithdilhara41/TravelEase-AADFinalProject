@@ -45,6 +45,7 @@ public class VehicleServiceImpl implements VehicleService {
         Vehicle vehicle = modelMapper.map(vehicleDTO, Vehicle.class);
         vehicle.setUser(user); // ✅ Assign managed User entity
         vehicle.setStatus("PENDING"); // Default status
+        vehicle.setBooked("NO"); // Default status
 
         vehicleRepository.save(vehicle);
         return VarList.Created;
@@ -89,10 +90,52 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
+    public int deactivateVehicle(String vehicleNumber) {
+        Optional<Vehicle> existingVehicleOpt = vehicleRepository.findByVehicleNumber(vehicleNumber);
+        if (existingVehicleOpt.isPresent()) {
+            Vehicle existingVehicle = existingVehicleOpt.get();
+            existingVehicle.setStatus("PENDING");
+            vehicleRepository.save(existingVehicle);
+            return VarList.Created;
+        }
+        return VarList.Not_Found;
+    }
+
+    @Override
+    public int activateVehicle(String vehicleNumber) {
+        Optional<Vehicle> existingVehicleOpt = vehicleRepository.findByVehicleNumber(vehicleNumber);
+        if (existingVehicleOpt.isPresent()) {
+            Vehicle existingVehicle = existingVehicleOpt.get();
+            existingVehicle.setStatus("ACTIVE");
+            vehicleRepository.save(existingVehicle);
+            return VarList.Created;
+        }
+        return VarList.Not_Found;
+    }
+
+
+    @Override
     public List<VehicleDTO> getVehiclesByStatus(String status) {
         List<Vehicle> vehicles = vehicleRepository.findByStatus(status);
         return vehicles.stream()
                 .map(vehicle -> modelMapper.map(vehicle, VehicleDTO.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<VehicleDTO> getAvailableVehicles() {
+        List<Vehicle> vehicles = vehicleRepository.findAllByBookedAndStatus("NO", "ACTIVE");
+        return vehicles.stream()
+                .map(vehicle -> modelMapper.map(vehicle, VehicleDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<VehicleDTO> getVehiclesByUserEmail(String email) {
+        List<Vehicle> vehicles = vehicleRepository.findByUserEmail(email);
+        return vehicles.stream()
+                .map(vehicle -> modelMapper.map(vehicle, VehicleDTO.class))
+                .collect(Collectors.toList());
+    }
+
 }

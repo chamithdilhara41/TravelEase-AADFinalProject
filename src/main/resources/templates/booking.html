@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>TRAVELER - Free Travel Website Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
+<body>
+<!-- Topbar Start -->
+<div class="container-fluid bg-light pt-3 d-none d-lg-block">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
+                <div class="d-inline-flex align-items-center">
+                    <p><i class="fa fa-envelope mr-2"></i>info@travelEase.com</p>
+                    <p class="text-body px-3">|</p>
+                    <p><i class="fa fa-phone-alt mr-2"></i>+94 345 6789</p>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-primary px-3" href="">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="text-primary px-3" href="">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="text-primary px-3" href="">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="text-primary px-3" href="">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="text-primary pl-3" href="">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Topbar End -->
+
+<!-- Navbar Start -->
+<div class="container-fluid position-relative nav-bar p-0">
+    <div class="container-lg position-relative p-0 px-lg-3" style="z-index: 9;">
+        <nav class="navbar navbar-expand-lg bg-light navbar-light shadow-lg py-3 py-lg-0 pl-3 pl-lg-5">
+            <a href="index.html" class="navbar-brand">
+                <h1 class="m-0 text-primary"><span class="text-dark">Travel</span>Ease</h1>
+            </a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
+                <div class="navbar-nav ml-auto py-0">
+                    <a href="about.html" class="nav-item nav-link">About</a>
+                    <a href="service.html" class="nav-item nav-link">Services</a>
+                    <a href="package.html" class="nav-item nav-link">Packages</a>
+                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                    <a href="loginRegister.html" class="nav-item nav-link">Sign in/up</a>
+
+                    <div class="nav-item dropdown d-none" id="userDropdown" >
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><span>Hi,user name</span></a>
+                        <div class="dropdown-menu border-0 rounded-0 m-0 ">
+                            <a href="#" class="dropdown-item" onclick="loadPage('user-profile.html')">User Profile</a>
+                            <a href="#" class="dropdown-item" onclick="loadPage('user-bookings.html')">Bookings</a>
+                            <a href="#" class="dropdown-item text-danger">Log out</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+<!-- Navbar End -->
+
+<style>
+    .card-option {
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .card-option:hover {
+        border-color: #79e490;
+        background-color: #f0f8ff;
+    }
+
+    .card-option.selected {
+        border-color: #0d6efd;
+        background-color: #e6f0ff;
+    }
+
+    .card-img-top {
+        height: 100px;
+        object-fit: cover;
+    }
+</style>
+
+<div class="container-fluid py-5">
+    <div class="card shadow-lg p-4 mx-auto">
+        <h2 class="mb-4 text-center">Create a New Booking</h2>
+
+        <div class="row g-4">
+            <!-- Left Panel -->
+            <div class="col-md-7">
+                <div class="card p-4 shadow-sm rounded-4">
+
+                    <!-- Booking Date -->
+                    <div class="mb-3">
+                        <label for="bookingDate" class="form-label">Booking Start Date</label>
+                        <input type="date" id="bookingDate" class="form-control" required>
+                    </div>
+
+                    <!-- Number of People -->
+                    <div class="mb-3">
+                        <label for="numPeople" class="form-label">Number of People</label>
+                        <input type="number" id="numPeople" class="form-control" value="1" min="1" required>
+                    </div>
+
+                    <!-- Package Cards -->
+                    <div class="mb-3">
+                        <label class="form-label">Select Package</label>
+                        <div id="packageCards" class="row g-3">
+
+                        </div>
+                    </div>
+
+                    <!-- Available Vehicles -->
+                    <div class="mb-3">
+                        <label class="form-label">Available Vehicles</label>
+                        <div id="availableVehicles" class="row g-3">
+                            <!-- Vehicles will be loaded here dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Available Guides -->
+                    <div class="mb-3">
+                        <label class="form-label">Available Guides</label>
+                        <div id="guideCards" class="row g-2">
+                            <!-- Example Guide Card 1 -->
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Right Panel -->
+            <div class="col-md-4">
+                <div class="card shadow-sm rounded-4 p-4 bg-light">
+                    <h4 class="mb-3 text-center">Booking Summary</h4>
+
+                    <div class="mb-3">
+                        <label for="userEmail" class="form-label">User email</label>
+                        <input type="text" id="userEmail" name="userEmail" class="form-control" readonly>
+                    </div>
+
+                    <!-- Booking Date-->
+                    <div class="mb-3">
+                        <label for="summaryBookingDate" class="form-label">Booking Date</label>
+                        <input type="text" id="summaryBookingDate" class="form-control" readonly>
+                    </div>
+
+                    <!-- Checkout Date (calculated) -->
+                    <div class="mb-3">
+                        <label for="checkoutDate" class="form-label">Checkout Date</label>
+                        <input type="text" id="checkoutDate" class="form-control" readonly>
+                    </div>
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <strong>Estimated Days:</strong> <span id="summaryDays">--</span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Selected Package:</strong> <span id="summaryPackage">--</span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>People:</strong> <span id="summaryPeople">1</span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Vehicle:</strong> <span id="summaryVehicle">--</span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Guide:</strong> <span id="summaryGuide">--</span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Guide Email:</strong> <span id="summaryGuideEmail">--</span>
+                        </li>
+                        <li class="list-group-item ">
+                            <strong>Vehicle No:</strong> <span id="summaryVehicleNumber">--</span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Base Price:</strong> <span id="summaryBase">LKR 0.00</span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Guide Fee:</strong> <span id="summaryGuideFee">LKR 0.00</span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Total Price:</strong>
+                            <span id="summaryTotal" class="text-success fw-bold">LKR 0.00</span>
+                        </li>
+
+                    </ul>
+
+                    <div class="d-grid mt-4">
+                        <button class="btn btn-primary btn-lg" id="confirmBookingBtn" type="submit">Confirm Booking</button>
+                    </div>
+
+                    <script>
+                        $("#confirmBookingBtn").click(function (e) {
+                            e.preventDefault();
+
+                            const BookingDTO = {
+                                packageName: $("#summaryPackage").text().trim(),
+                                guideEmail: $("#summaryGuideEmail").text().trim(),
+                                vehicleNumber: $("#summaryVehicleNumber").text().trim(),
+                                estimatedDays: parseInt($("#summaryDays").text()),
+                                userEmail: $("#userEmail").val().trim(), // make sure you have it in the page
+                                bookingDate: $("#summaryBookingDate").val(),
+                                checkoutDate: $("#checkoutDate").val(),
+                                numberOfPeople: parseInt($("#summaryPeople").text()),
+                                basePrice: parseFloat($("#summaryBase").text().replace("LKR", "").trim()),
+                                guideFee: parseFloat($("#summaryGuideFee").text().replace("LKR", "").trim()),
+                                totalPrice: parseFloat($("#summaryTotal").text().replace("LKR", "").trim())
+                            };
+
+                            $.ajax({
+                                url: "http://localhost:8080/api/v1/booking/save",
+                                type: "POST",
+                                contentType: "application/json",
+                                data: JSON.stringify(BookingDTO),
+                                success: function (response) {
+                                    alert("Booking successful!");
+                                    // Optionally reload or update UI
+                                },
+                                error: function (xhr) {
+                                    console.error("Booking failed:", xhr.responseText);
+                                    alert("Booking failed!");
+                                }
+                            });
+                        });
+
+                    </script>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<!-- JS Logic -->
+<script>
+
+    document.getElementById("userEmail").value = getFromLocalStorage("email");
+
+    function getFromLocalStorage(key) {
+        const data = localStorage.getItem(key);
+        if (!data) return null;
+
+        const parsedData = JSON.parse(data);
+        const now = new Date().getTime();
+
+        if (now > parsedData.expiry) {
+            localStorage.removeItem(key);
+            return null;
+        }
+        return parsedData.value;
+
+    }
+
+    function loadPackages() {
+        $.ajax({
+            url: "http://localhost:8080/api/v1/package/getAll",
+            method: "GET",
+            success: function (response) {
+                if (response.code === 201) {
+                    const packages = response.data;
+                    let html = "";
+
+                    packages.forEach(pkg => {
+                        const destinationList = pkg.destinations.map(dest => `<li>${dest}</li>`).join("");
+
+                        html += `
+                        <div class="col-md-4">
+                            <div class="card card-option h-100">
+                                <img src="uploads/${pkg.imageUrl}" class="card-img-top" style="height:180px; object-fit:cover;" alt="${pkg.name}">
+                                <div class="card-body p-2">
+                                    <h6 class="card-title text-center">${pkg.name}</h6>
+                                    <p class="text-muted small text-center">Days: ${pkg.estimatedDays}</p>
+                                    <p class="text-muted small text-center">Price: LKR ${pkg.price.toFixed(2)}</p>
+                                    <ul class="small ps-3">${destinationList}</ul>
+                                    <button class="btn btn-outline-primary btn-sm w-100 mt-2"
+                                    data-id="${pkg.id}"
+                                    data-name="${pkg.name}"
+                                    data-price="${pkg.price}"
+                                    data-days="${pkg.estimatedDays}">Select
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    });
+
+                    $("#packageCards").html(html);
+
+                    $('#packageCards .card-option button').on('click', function () {
+                        $('#packageCards .card-option').removeClass('selected');
+                        const card = $(this).closest('.card-option');
+                        card.addClass('selected');
+
+                        const packageName = $(this).data('name');
+                        const price = parseFloat($(this).data('price'));
+                        const days = parseInt($(this).data('days')); // ✅ get estimated days
+                        const people = parseInt($('#numPeople').val() || 1);
+
+                        // Set values globally
+                        packageDays = days;
+                        basePrice = price;
+
+                        $('#summaryPackage').text(packageName);
+                        $('#summaryBase').text(`LKR ${price.toFixed(2)}`);
+                        $('#summaryPeople').text(people);
+                        let totalPrice = price;
+                        if (people > 1) {
+                            const extraPeople = people - 1;
+                            totalPrice += extraPeople * price * 0.70; // 40% off means 60% of the price
+                            basePrice = totalPrice;
+                        }
+                        $('#summaryTotal').text(`LKR ${totalPrice.toFixed(2)}`);
+
+                        updateCheckoutDate(); // ✅ update checkout date after selecting package
+
+                        function updateCheckoutDate() {
+                            const bookingDate = $("#bookingDate").val();
+                            $("#summaryBookingDate").val(bookingDate);
+                            $("#summaryDays").text(packageDays);
+                            if (bookingDate && packageDays > 0) {
+                                const date = new Date(bookingDate);
+                                date.setDate(date.getDate() + packageDays);
+                                const checkout = date.toISOString().split("T")[0];
+                                $("#checkoutDate").val(checkout);
+                            }
+                        }
+
+
+                    });
+
+                } else {
+                    $("#packageCards").html(`<p class="text-danger">No packages found.</p>`);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Failed to fetch packages:", error);
+                $("#packageCards").html(`<p class="text-danger">Error loading packages.</p>`);
+            }
+        });
+    }
+
+    loadPackages()
+
+    $('#numPeople').on('input', function () {
+        const people = parseInt($(this).val()) || 1;
+        $('#summaryPeople').text(people);
+
+    });
+
+
+
+    function loadAvailableVehicles() {
+        $.ajax({
+            url: "http://localhost:8080/api/v1/vehicle/available",
+            method: "GET",
+            success: function (response) {
+                if (response.code === 201) {
+                    const vehicles = response.data;
+                    let html = "";
+
+                    vehicles.forEach(vehicle => {
+                        const imageUrl = vehicle.vehicleImages?.[0]
+                            ? `uploads/${vehicle.vehicleImages[0]}`
+                            : 'https://via.placeholder.com/300x200?text=No+Image';
+
+                        html += `
+                    <div class="col-md-4">
+                        <div class="card card-option h-100">
+                            <img src="${imageUrl}" class="card-img-top" style="height:180px; object-fit:cover;" alt="${vehicle.vehicleType}">
+                            <div class="card-body p-2">
+                                <h6 class="card-title text-center">${vehicle.vehicleType} - ${vehicle.brand} ${vehicle.model}</h6>
+                                <p class="text-muted small text-center">Vehicle No: ${vehicle.vehicleNumber}</p>
+                                <p class="text-muted small text-center">Seats: ${vehicle.seatingCapacity}</p>
+                                <p class="text-muted small text-center">Fuel: ${vehicle.fuelType}</p>
+                                <p class="text-muted small text-center">Color: ${vehicle.color}</p>
+                                <button class="btn btn-outline-success btn-sm w-100 mt-2"
+                                    data-vehicleno="${vehicle.vehicleNumber}"
+                                    data-type="${vehicle.vehicleType}"
+                                    data-seats="${vehicle.seatingCapacity}">Select Vehicle</button>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                    });
+
+                    $("#availableVehicles").html(html);
+
+                    // Bind vehicle selection event
+                    $('#availableVehicles .card-option button').on('click', function () {
+                        $('#availableVehicles .card-option').removeClass('selected');
+                        const card = $(this).closest('.card-option');
+                        card.addClass('selected');
+
+                        const type = $(this).data('type');
+                        const number = $(this).data('vehicleno');
+                        const seats = $(this).data('seats');
+
+                        $('#summaryVehicle').text(`${type} (${seats} seats)`);
+                        $('#summaryVehicleNumber').text(`${number}`);
+                    });
+                } else {
+                    $("#availableVehicles").html(`<p class="text-danger">No available vehicles found.</p>`);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error loading vehicles:", error);
+                $("#availableVehicles").html(`<p class="text-danger">Error loading vehicles.</p>`);
+            }
+        });
+    }
+
+    // Call this on page load or when relevant
+    loadAvailableVehicles();
+
+    function loadAvailableGuides() {
+        $.ajax({
+            url: "http://localhost:8080/api/v1/guide/available", // Use your correct endpoint
+            method: "GET",
+            success: function (response) {
+                if (response.code === 201) {
+                    const guides = response.data;
+                    let html = "";
+
+                    guides.forEach(guide => {
+                        const imageUrl = guide.imageUrl ? `uploads/${guide.imageUrl}` : 'https://via.placeholder.com/300x200?text=No+Image';
+
+                        html += `
+                        <div class="col-md-4">
+                            <div class="card card-option h-100">
+                                <img src="${imageUrl}" class="card-img-top" style="height:180px; object-fit:cover;" alt="${guide.fullName}">
+                                <div class="card-body p-2">
+                                    <h6 class="card-title text-center">${guide.fullName}</h6>
+                                    <p class="text-muted small text-center">Description: ${guide.description}</p>
+                                    <p class="text-muted small text-center">Payment per Day: LKR ${guide.paymentPerDay}</p>
+                                    <button class="btn btn-outline-success btn-sm w-100 mt-2"
+                                        data-guideid="${guide.email}"
+                                        data-name="${guide.fullName}"
+                                        data-description="${guide.description}"
+                                        data-payment="${guide.paymentPerDay}">Select Guide</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    });
+
+                    $("#guideCards").html(html);
+
+                    // Re-bind selection button
+                    $('#guideCards .card-option button').on('click', function () {
+                        $('#guideCards .card-option').removeClass('selected');
+                        const card = $(this).closest('.card-option');
+                        card.addClass('selected');
+
+                        const name = $(this).data('name');
+                        const description = $(this).data('description');
+                        const payment = parseInt($(this).data('payment'));
+                        const days = packageDays;
+                        const guidePrice = payment * days;
+                        const guideId = $(this).data('guideid');
+
+                        $('#summaryGuide').text(`${name} - Payment: LKR ${payment}`);
+                        $('#summaryGuideEmail').text(`${guideId}`);
+                        $('#summaryGuideDescription').text(description);
+                        $('#summaryGuideFee').text(`LKR ${guidePrice.toFixed(2)}`);
+                        $('#summaryTotal').text(`LKR ${(basePrice + guidePrice).toFixed(2)}`);
+                    });
+                } else {
+                    $("#guideCards").html(`<p class="text-danger">No available guides found.</p>`);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Guide load error:", error);
+                $("#guideCards").html(`<p class="text-danger">Error loading guides.</p>`);
+            }
+        });
+    }
+
+    loadAvailableGuides();
+
+</script>
+
+
+<!-- Footer Start -->
+<div class="container-fluid bg-dark text-white-50 py-5 px-sm-3 px-lg-5" style="margin-top: 90px;">
+    <div class="row pt-5">
+        <div class="col-lg-3 col-md-6 mb-5">
+            <a href="" class="navbar-brand">
+                <h1 class="text-primary"><span class="text-white">Travel</span>Ease</h1>
+            </a>
+            <p>Sed ipsum clita tempor ipsum ipsum amet sit ipsum lorem amet labore rebum lorem ipsum dolor. No sed vero lorem dolor dolor</p>
+            <h6 class="text-white text-uppercase mt-4 mb-3" style="letter-spacing: 5px;">Follow Us</h6>
+            <div class="d-flex justify-content-start">
+                <a class="btn btn-outline-primary btn-square mr-2" href="#"><i class="fab fa-twitter"></i></a>
+                <a class="btn btn-outline-primary btn-square mr-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                <a class="btn btn-outline-primary btn-square mr-2" href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a class="btn btn-outline-primary btn-square" href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-5">
+            <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Our Services</h5>
+            <div class="d-flex flex-column justify-content-start">
+                <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>About</a>
+                <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Destination</a>
+                <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Services</a>
+                <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Packages</a>
+                <a class="text-white-50" href="#"><i class="fa fa-angle-right mr-2"></i>Blog</a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-5">
+            <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Quick Links</h5>
+            <div class="d-flex flex-column justify-content-start">
+                <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Guides</a>
+                <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Testimonial</a>
+                <a class="text-white-50" href="#"><i class="fa fa-angle-right mr-2"></i>Blog</a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-5">
+            <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Contact Us</h5>
+            <p><i class="fa fa-map-marker-alt mr-2"></i>123 Street, Colombo, Sri Lanka</p>
+            <p><i class="fa fa-phone-alt mr-2"></i>+94 345 67890</p>
+            <p><i class="fa fa-envelope mr-2"></i>info@travelEase.com</p>
+        </div>
+    </div>
+</div>
+<div class="container-fluid bg-dark text-white border-top py-4 px-sm-3 px-md-5" style="border-color: rgba(256, 256, 256, .1) !important;">
+    <div class="row">
+        <div class="col-lg-6 text-center text-md-left mb-3 mb-md-0">
+            <p class="m-0 text-white-50">Copyright &copy; <a href="#">Domain</a>. All Rights Reserved.</a>
+            </p>
+        </div>
+    </div>
+</div>
+<!-- Footer End -->
+
+
+<!-- Back to Top -->
+<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+<script src="js/user-config.js"></script>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="lib/tempusdominus/js/moment.min.js"></script>
+<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<!-- Contact Javascript File -->
+<script src="mail/jqBootstrapValidation.min.js"></script>
+<script src="mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="js/main.js"></script>
+</body>
+
+</html>
