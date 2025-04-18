@@ -59,7 +59,7 @@ TravelEase simplifies travel planning for tourists by offering a seamless, end-t
 ## 📹 Demo Video
 
 🎬 Watch the full walkthrough here:  
-**[Spring Boot Project - IJSE - GDSE69 - Panadura - Chamith Dilhara - 2nd Semester Final Project]([https://youtu.be/j6Ud7_X2u80](https://youtu.be/j6Ud7_X2u80))**
+**[Spring Boot Project - IJSE - GDSE69 - Panadura - Chamith Dilhara - 2nd Semester Final Project](https://youtu.be/j6Ud7_X2u80)**
 
 ---
 
