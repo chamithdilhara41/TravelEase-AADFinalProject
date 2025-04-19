@@ -56,6 +56,22 @@ TravelEase simplifies travel planning for tourists by offering a seamless, end-t
 
 ---
 
+## 📸 Screenshots
+
+### 🏠 Home Page
+![Home Page](./screenshots/home-page.png)
+
+### 📅 Booking Form
+![Booking Form](./screenshots/booking-form.png)
+
+### 🧑‍💼 Admin Dashboard
+![Admin Dashboard](./screenshots/admin-dashboard.png)
+
+### 🧳 Tour Package View
+![Tour Package View](./screenshots/tour-package.png)
+
+---
+
 ## 📹 Demo Video
 
 🎬 Watch the full walkthrough here:  
