@@ -77,6 +77,9 @@ TravelEase simplifies travel planning for tourists by offering a seamless, end-t
 ![image](https://github.com/user-attachments/assets/1cef88c8-32e1-44bb-8b21-a15cc3dba83b)
 
 
+### 📧 Guide Registration Confirmation Email
+![Screenshot 2025-04-19 070301](https://github.com/user-attachments/assets/7b5c6b44-e545-4e6e-b6e3-31de2a5a6ebd)
+
 ---
 
 ## 📹 Demo Video
