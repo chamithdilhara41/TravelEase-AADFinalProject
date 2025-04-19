@@ -58,17 +58,24 @@ TravelEase simplifies travel planning for tourists by offering a seamless, end-t
 
 ## 📸 Screenshots
 
+### 🗝️ Login and Sign up Page
+![image](https://github.com/user-attachments/assets/38858821-b006-4537-82cd-8e0c56a20819)
+![image](https://github.com/user-attachments/assets/16d46de5-2f28-4e7a-8752-dc2e1834d2e9)
+
 ### 🏠 Home Page
-![Home Page](./screenshots/home-page.png)
+![image](https://github.com/user-attachments/assets/56954b5d-b254-4d5f-84d5-75ee05f59905)
 
 ### 📅 Booking Form
-![Booking Form](./screenshots/booking-form.png)
+![image](https://github.com/user-attachments/assets/031300f8-e1cf-40f1-91ee-8173bec19c3d)
+
 
 ### 🧑‍💼 Admin Dashboard
-![Admin Dashboard](./screenshots/admin-dashboard.png)
+![image](https://github.com/user-attachments/assets/1b7fbfd9-9ac0-4926-ad36-bca2b200de53)
 
 ### 🧳 Tour Package View
-![Tour Package View](./screenshots/tour-package.png)
+![image](https://github.com/user-attachments/assets/80acd039-c9be-4f17-8742-4bf34e992451)
+![image](https://github.com/user-attachments/assets/1cef88c8-32e1-44bb-8b21-a15cc3dba83b)
+
 
 ---
 
